@@ -16,9 +16,6 @@ def main():
     img = cv.imread(filename)
     img_crop = img[crop_y_start:crop_y_end, crop_x_start:crop_x_end]
     cv.imwrite('./building_enlarge_bicubic_crop.jpg', img_crop)
-    cv.imshow('crop', img_crop)
-    cv.waitKey(0)
-    cv.destroyAllWindows()
 
 
 if __name__ == "__main__":

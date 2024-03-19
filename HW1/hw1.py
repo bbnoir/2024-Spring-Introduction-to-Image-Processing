@@ -27,7 +27,7 @@ def rotate(img, angle, method):
         for i in range(h):
             for j in range(w):
                 x, y, _ = np.dot(transform_matrix, [j, i, 1])
-                x, y = int(x), int(y) # nearest neighbor
+                x, y = int(round(x)), int(round(y))
                 if x >= 0 and x < w and y >= 0 and y < h:
                     result[i, j] = img[y, x]
     elif method == 'bilinear':

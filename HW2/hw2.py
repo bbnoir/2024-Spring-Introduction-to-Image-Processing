@@ -55,11 +55,11 @@ def main():
 
     if args.all or args.equal:
         equal_out_file = histogram_equalization(equal_in_file)
-        cv.imwrite('Q1_output.jpg', equal_out_file)
+        cv.imwrite('Q1_output.png', equal_out_file)
     
     if args.all or args.spec:
         spec_out_file = histogram_specification(spec_in_file, spec_ref_file)
-        cv.imwrite('Q2_output.jpg', spec_out_file)
+        cv.imwrite('Q2_output.png', spec_out_file)
 
 if __name__ == "__main__":
     main()

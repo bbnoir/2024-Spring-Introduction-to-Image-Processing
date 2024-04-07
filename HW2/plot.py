@@ -3,81 +3,103 @@ import numpy as np
 import matplotlib.pyplot as plt
 import argparse
 
+def compute_histogram(img):
+    hist = np.zeros(256)
+    for i in range(img.shape[0]):
+        for j in range(img.shape[1]):
+            hist[img[i, j]] += 1
+    return hist
+
+def compute_cdf(hist, img):
+    cdf = np.zeros(256)
+    cdf[0] = hist[0]
+    for i in range(1, 256):
+        cdf[i] = cdf[i-1] + hist[i]
+    cdf = (255.0 * cdf / (img.shape[0] * img.shape[1])).round().astype(np.uint8)
+    return cdf
+
 def main():
     # plot Equalization
-    # equal_in_file = cv.imread('Q1.jpg', cv.IMREAD_GRAYSCALE)
-    # equal_out_file = cv.imread('Q1_output.jpg', cv.IMREAD_GRAYSCALE)
+    equal_in_file = cv.imread('Q1.jpg', cv.IMREAD_GRAYSCALE)
+    equal_out_file = cv.imread('Q1_output.png', cv.IMREAD_GRAYSCALE)
+
+    # plot 2 images without axis
+    plt.figure()
+    plt.subplot(1, 2, 1)
+    plt.imshow(equal_in_file, cmap='gray')
+    plt.title('Source Image')
+    plt.axis('off')
+    plt.subplot(1, 2, 2)
+    plt.imshow(equal_out_file, cmap='gray')
+    plt.title('Equalized Image')
+    plt.axis('off')
+    plt.savefig('plots/equal_images.png')
 
     # plot 2 histograms
-    # hist_in = cv.calcHist([equal_in_file], [0], None, [256], [0, 256])
-    # hist_out = cv.calcHist([equal_out_file], [0], None, [256], [0, 256])
-    # plt.figure(figsize=(10, 5))
-    # plt.subplot(1, 2, 1)
-    # plt.plot(hist_in)
-    # plt.title('Input Image Histogram')
-    # plt.subplot(1, 2, 2)
-    # plt.plot(hist_out)
-    # plt.title('Output Image Histogram')
-    # plt.show()
+    hist_in = compute_histogram(equal_in_file)
+    hist_out = compute_histogram(equal_out_file)
+    plt.figure(figsize=(10, 5))
+    plt.subplot(1, 2, 1)
+    plt.bar(np.arange(256), hist_in, color='blue')
+    plt.title('Source Histogram')
+    plt.subplot(1, 2, 2)
+    plt.bar(np.arange(256), hist_out, color='orange')
+    plt.title('Equalized Histogram')
+    plt.savefig('plots/equal_histograms.png')
 
     # plot 2 CDFs
-    # cdf_in = np.cumsum(hist_in)
-    # cdf_out = np.cumsum(hist_out)
-    # plt.figure(figsize=(10, 5))
-    # plt.subplot(1, 2, 1)
-    # plt.plot(cdf_in)
-    # plt.title('Input Image CDF')
-    # plt.subplot(1, 2, 2)
-    # plt.plot(cdf_out)
-    # plt.title('Output Image CDF')
-    # plt.show()
+    cdf_in = compute_cdf(hist_in, equal_in_file)
+    cdf_out = compute_cdf(hist_out, equal_out_file)
+    plt.figure(figsize=(10, 5))
+    plt.subplot(1, 2, 1)
+    plt.plot(cdf_in, color='blue')
+    plt.title('Source CDF')
+    plt.subplot(1, 2, 2)
+    plt.plot(cdf_out, color='orange')
+    plt.title('Equalized CDF')
+    plt.savefig('plots/equal_cdfs.png')
 
     # plot Specified Histogram Equalization
     specified_in_file = cv.imread('Q2_source.jpg', cv.IMREAD_GRAYSCALE)
     specified_ref_file = cv.imread('Q2_reference.jpg', cv.IMREAD_GRAYSCALE)
-    specified_out_file = cv.imread('Q2_output.jpg', cv.IMREAD_GRAYSCALE)
+    specified_out_file = cv.imread('Q2_output.png', cv.IMREAD_GRAYSCALE)
 
-    
-
-    hist_in = cv.calcHist([specified_in_file], [0], None, [256], [0, 256])
-    hist_ref = cv.calcHist([specified_ref_file], [0], None, [256], [0, 256])
-    hist_out = cv.calcHist([specified_out_file], [0], None, [256], [0, 256])
-    plt.figure()
-    plt.bar(np.arange(256), hist_in.flatten(), color='b', alpha=0.5)
-    plt.bar(np.arange(256), hist_ref.flatten(), color='r', alpha=0.5)
-    plt.bar(np.arange(256), hist_out.flatten(), color='g', alpha=0.5)
-    plt.title('Image Histograms')
-    plt.legend(['Input', 'Reference', 'Output'])
-    plt.show()
-    
-    cdf_in = np.cumsum(hist_in)
-    cdf_ref = np.cumsum(hist_ref)
-    cdf_out = np.cumsum(hist_out)
+    hist_in = compute_histogram(specified_in_file)
+    hist_ref = compute_histogram(specified_ref_file)
+    hist_out = compute_histogram(specified_out_file)
     plt.figure(figsize=(15, 5))
     plt.subplot(1, 3, 1)
-    plt.plot(cdf_in)
-    plt.title('Input Image CDF')
+    plt.bar(np.arange(256), hist_in, color='blue')
+    plt.title('Source Histogram')
     plt.subplot(1, 3, 2)
-    plt.plot(cdf_ref)
-    plt.title('Reference Image CDF')
+    plt.bar(np.arange(256), hist_ref, color='green')
+    plt.title('Reference Histogram')
     plt.subplot(1, 3, 3)
-    plt.plot(cdf_out)
-    plt.title('Output Image CDF')
-    plt.show()
+    plt.bar(np.arange(256), hist_out, color='orange')
+    plt.title('Specified Histogram')
+    plt.savefig('plots/spec_histograms.png')
     
-    plt.figure()
-    plt.plot(cdf_in, label='Input Image CDF')
-    plt.plot(cdf_ref, label='Reference Image CDF')
-    plt.plot(cdf_out, label='Output Image CDF')
-    plt.title('Image CDFs')
-    plt.legend()
-    plt.show()
     
+    cdf_in = compute_cdf(hist_in, specified_in_file)
+    cdf_ref = compute_cdf(hist_ref, specified_ref_file)
+    cdf_out = compute_cdf(hist_out, specified_out_file)
+    plt.figure(figsize=(15, 5))
+    plt.subplot(1, 3, 1)
+    plt.plot(cdf_in, color='blue')
+    plt.title('Source CDF')
+    plt.subplot(1, 3, 2)
+    plt.plot(cdf_ref, color='green')
+    plt.title('Reference CDF')
+    plt.subplot(1, 3, 3)
+    plt.plot(cdf_out, color='orange')
+    plt.title('Specified CDF')
+    plt.savefig('plots/spec_cdfs.png')
+
     # show 3 images
     plt.figure()
     plt.subplot(1, 3, 1)
     plt.imshow(specified_in_file, cmap='gray')
-    plt.title('Input Image')
+    plt.title('Source Image')
     plt.axis('off')
     plt.subplot(1, 3, 2)
     plt.imshow(specified_ref_file, cmap='gray')
@@ -85,11 +107,9 @@ def main():
     plt.axis('off')
     plt.subplot(1, 3, 3)
     plt.imshow(specified_out_file, cmap='gray')
-    plt.title('Output Image')
+    plt.title('Specified Image')
     plt.axis('off')
-    plt.show()
-    
-    
+    plt.savefig('plots/spec_images.png')
     
 if __name__ == "__main__":
     main()

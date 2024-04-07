@@ -9,42 +9,38 @@ def compute_histogram(img):
             hist[img[i, j]] += 1
     return hist
 
-def compute_transform(hist, img):
-    trans = np.zeros(256)
+def compute_cdf(hist, img):
+    cdf = np.zeros(256)
     for i in range(1, 256):
-        trans[i] = trans[i-1] + hist[i]
-    trans = (255.0 * trans / (img.shape[0] * img.shape[1])).round().astype(np.uint8)
-    return trans
-
-def inverse_transform(trans):
-    inv = np.zeros(256)
-    for i in range(256):
-        inv[trans[i]] = i
-    # make monotonically increasing
-    for i in range(1, 256):
-        if inv[i] < inv[i-1]:
-            inv[i] = inv[i-1]
-    return inv
+        cdf[i] = cdf[i-1] + hist[i]
+    cdf = (255.0 * cdf / (img.shape[0] * img.shape[1])).round().astype(np.uint8)
+    return cdf
 
 def histogram_equalization(img):
     hist = compute_histogram(img)
-    trans = compute_transform(hist, img)
+    cdf = compute_cdf(hist, img)
     img2 = np.zeros_like(img)
-    for i in range(img.shape[0]):
-        for j in range(img.shape[1]):
-            img2[i][j] = trans[img[i][j]]
+    img2 = cdf[img]
     return img2
 
+def gen_spec_map(cdf_source, cdf_ref):
+    ref_map = np.zeros(256)
+    for i in range(256):
+        # ref_map[i] = np.argmin(np.abs(cdf_ref - i))
+        # find the index of the largest element in cdf_ref that is less than or equal to i
+        ref_map[i] = np.max(np.where(cdf_ref <= i))
+    return ref_map
+
 def histogram_specification(img, ref):
-    hist = compute_histogram(img)
-    trans = compute_transform(hist, img)
+    hist_source = compute_histogram(img)
+    cdf_source = compute_cdf(hist_source, img)
     hist_ref = compute_histogram(ref)
-    trans_ref = compute_transform(hist_ref, ref)
-    trans_ref_inv = inverse_transform(trans_ref)
+    cdf_ref = compute_cdf(hist_ref, ref)
+    ref_map = gen_spec_map(cdf_source, cdf_ref)
     img2 = np.zeros_like(img)
     for i in range(img.shape[0]):
         for j in range(img.shape[1]):
-            img2[i][j] = trans_ref_inv[trans[img[i][j]]]
+            img2[i, j] = ref_map[cdf_source[img[i, j]]]
     return img2
 
 def main():

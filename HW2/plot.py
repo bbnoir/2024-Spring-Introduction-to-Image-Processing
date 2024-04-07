@@ -47,6 +47,13 @@ def main():
     plt.title('Equalized Histogram')
     plt.savefig('plots/equal_histograms.png')
 
+    # plot 2 histograms in one figure
+    plt.figure()
+    plt.bar(np.arange(256), hist_in, color='blue', alpha=0.5, label='Source Histogram')
+    plt.bar(np.arange(256), hist_out, color='orange', alpha=0.5, label='Equalized Histogram')
+    plt.legend()
+    plt.savefig('plots/equal_histograms_one.png')
+
     # plot 2 CDFs
     cdf_in = compute_cdf(hist_in, equal_in_file)
     cdf_out = compute_cdf(hist_out, equal_out_file)
@@ -59,6 +66,13 @@ def main():
     plt.title('Equalized CDF')
     plt.savefig('plots/equal_cdfs.png')
 
+    # plot 2 CDFs in one figure
+    plt.figure()
+    plt.plot(cdf_in, color='blue', alpha=0.5, label='Source CDF')
+    plt.plot(cdf_out, color='orange', alpha=0.5, label='Equalized CDF')
+    plt.legend()
+    plt.savefig('plots/equal_cdfs_one.png')
+
     # plot Specified Histogram Equalization
     specified_in_file = cv.imread('Q2_source.jpg', cv.IMREAD_GRAYSCALE)
     specified_ref_file = cv.imread('Q2_reference.jpg', cv.IMREAD_GRAYSCALE)
@@ -67,6 +81,8 @@ def main():
     hist_in = compute_histogram(specified_in_file)
     hist_ref = compute_histogram(specified_ref_file)
     hist_out = compute_histogram(specified_out_file)
+
+    # plot 3 histograms
     plt.figure(figsize=(15, 5))
     plt.subplot(1, 3, 1)
     plt.bar(np.arange(256), hist_in, color='blue')
@@ -78,8 +94,16 @@ def main():
     plt.bar(np.arange(256), hist_out, color='orange')
     plt.title('Specified Histogram')
     plt.savefig('plots/spec_histograms.png')
+
+    # plot 3 histograms in one figure
+    plt.figure()
+    plt.bar(np.arange(256), hist_in, color='blue', alpha=0.5, label='Source Histogram')
+    plt.bar(np.arange(256), hist_ref, color='green', alpha=0.5, label='Reference Histogram')
+    plt.bar(np.arange(256), hist_out, color='orange', alpha=0.5, label='Specified Histogram')
+    plt.legend()
+    plt.savefig('plots/spec_histograms_one.png')
     
-    
+    # plot 3 CDFs
     cdf_in = compute_cdf(hist_in, specified_in_file)
     cdf_ref = compute_cdf(hist_ref, specified_ref_file)
     cdf_out = compute_cdf(hist_out, specified_out_file)
@@ -94,6 +118,14 @@ def main():
     plt.plot(cdf_out, color='orange')
     plt.title('Specified CDF')
     plt.savefig('plots/spec_cdfs.png')
+
+    # plot 3 CDFs in one figure
+    plt.figure()
+    plt.plot(cdf_in, color='blue', alpha=0.5, label='Source CDF')
+    plt.plot(cdf_ref, color='green', alpha=0.5, label='Reference CDF')
+    plt.plot(cdf_out, color='orange', alpha=0.5, label='Specified CDF')
+    plt.legend()
+    plt.savefig('plots/spec_cdfs_one.png')
 
     # show 3 images
     plt.figure()

@@ -5,7 +5,7 @@ Run all methods:
 ```python
 python3 hw2.py --all
 ```
-Then the output images will be saved into `Q1_output.jpg` and `Q2_output.jpg`.
+Then the output images will be saved into `Q1_output.png` and `Q2_output.png`.
 
 Or run histogram equalization:
 ```python

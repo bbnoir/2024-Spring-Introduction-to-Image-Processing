@@ -48,13 +48,13 @@ def histogram_specification(img, ref):
 ### 2.1. Histogram Equalization
 
 <div style="display: flex;">
-    <img src="Q1.jpg" alt="Source Image" style="width: 50%; padding-right: 10px; padding: 10px;">
+    <img src="Q1.jpg" alt="Source Image" style="width: 50%; padding: 10px;">
     <img src="Q1_output.png" alt="Equalized Image" style="width: 50%; padding: 10px;">
 </div>
 <p align="center">Figure 1: Source Image (left) and Equalized Image (right)</p>
 
 <div style="display: flex;">
-    <img src="./plots/equal_histograms_one.png" alt="Histograms" style="width: 50%; padding-right: 10px; padding: 10px;">
+    <img src="./plots/equal_histograms_one.png" alt="Histograms" style="width: 50%; padding: 10px;">
     <img src="./plots/equal_cdfs_one.png" alt="CDFs" style="width: 50%; padding: 10px;">
 </div>
 <p align="center">Figure 2: Histograms (left) and CDFs (right) of Source/Equalized Image</p>
@@ -62,14 +62,14 @@ def histogram_specification(img, ref):
 ### 2.2. Histogram Specification
 
 <div style="display: flex;">
-    <img src="./Q2_source.jpg" alt="Source Image" style="width: 33%; padding-right: 10px; padding: 10px;">
-    <img src="./Q2_reference.jpg" alt="Reference Image" style="width: 33%; padding-right: 10px; padding: 10px;">
+    <img src="./Q2_source.jpg" alt="Source Image" style="width: 33%;  padding: 10px;">
+    <img src="./Q2_reference.jpg" alt="Reference Image" style="width: 33%;  padding: 10px;">
     <img src="./Q2_output.png" alt="Specified Image" style="width: 33%; padding: 10px;">
 </div>
 <p align="center">Figure 3: Source Image (left), Reference Image (middle), and Specified Image (right)</p>
 
 <div style="display: flex;">
-    <img src="./plots/spec_histograms_one.png" alt="Histograms" style="width: 50%; padding-right: 10px; padding: 10px;">
+    <img src="./plots/spec_histograms_one.png" alt="Histograms" style="width: 50%;  padding: 10px;">
     <img src="./plots/spec_cdfs_one.png" alt="CDFs" style="width: 50%; padding: 10px;">
 </div>
 <p align="center">Figure 4: Histograms (left) and CDFs (right) of Source/Reference/Specified Image</p>

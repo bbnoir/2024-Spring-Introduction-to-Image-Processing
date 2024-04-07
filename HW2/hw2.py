@@ -23,12 +23,10 @@ def histogram_equalization(img):
     img2 = cdf[img]
     return img2
 
-def gen_spec_map(cdf_source, cdf_ref):
+def gen_spec_map(cdf_ref):
     ref_map = np.zeros(256)
     for i in range(256):
-        # ref_map[i] = np.argmin(np.abs(cdf_ref - i))
-        # find the index of the largest element in cdf_ref that is less than or equal to i
-        ref_map[i] = np.max(np.where(cdf_ref <= i))
+        ref_map[i] = np.argmin(np.abs(cdf_ref - i))
     return ref_map
 
 def histogram_specification(img, ref):
@@ -36,7 +34,7 @@ def histogram_specification(img, ref):
     cdf_source = compute_cdf(hist_source, img)
     hist_ref = compute_histogram(ref)
     cdf_ref = compute_cdf(hist_ref, ref)
-    ref_map = gen_spec_map(cdf_source, cdf_ref)
+    ref_map = gen_spec_map(cdf_ref)
     img2 = np.zeros_like(img)
     for i in range(img.shape[0]):
         for j in range(img.shape[1]):

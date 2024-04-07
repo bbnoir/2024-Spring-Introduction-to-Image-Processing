@@ -11,6 +11,7 @@ def compute_histogram(img):
 
 def compute_cdf(hist, img):
     cdf = np.zeros(256)
+    cdf[0] = hist[0]
     for i in range(1, 256):
         cdf[i] = cdf[i-1] + hist[i]
     cdf = (255.0 * cdf / (img.shape[0] * img.shape[1])).round().astype(np.uint8)

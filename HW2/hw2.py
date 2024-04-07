@@ -46,7 +46,6 @@ def main():
     parser.add_argument('-a', '--all', action='store_true', help='Run all parts')
     parser.add_argument('-e', '--equal', action='store_true', help='Histogram Equalization')
     parser.add_argument('-s', '--spec', action='store_true', help='Histogram Specification')
-
     args = parser.parse_args()
 
     equal_in_file = cv.imread('Q1.jpg', cv.IMREAD_GRAYSCALE)

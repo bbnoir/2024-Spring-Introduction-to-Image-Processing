@@ -78,12 +78,15 @@ def main():
     plt.subplot(1, 3, 1)
     plt.imshow(specified_in_file, cmap='gray')
     plt.title('Input Image')
+    plt.axis('off')
     plt.subplot(1, 3, 2)
     plt.imshow(specified_ref_file, cmap='gray')
     plt.title('Reference Image')
+    plt.axis('off')
     plt.subplot(1, 3, 3)
     plt.imshow(specified_out_file, cmap='gray')
     plt.title('Output Image')
+    plt.axis('off')
     plt.show()
     
     

@@ -59,6 +59,8 @@ def histogram_specification(img, ref):
 </div>
 <p align="center">Figure 2: Histograms (left) and CDFs (right) of Source/Equalized Image</p>
 
+觀察Equalization的結果，可以發現圖片的對比度有所提升，且直方圖的分佈也變得更均勻。
+
 ### 2.2. Histogram Specification
 
 <div style="display: flex;">
@@ -73,6 +75,8 @@ def histogram_specification(img, ref):
     <img src="./plots/spec_cdfs_one.png" alt="CDFs" style="width: 49%; padding: 10px;">
 </div>
 <p align="center">Figure 4: Histograms (left) and CDFs (right) of Source/Reference/Specified Image</p>
+
+觀察Specification的結果，可以發現結果直方圖與CDF分佈與Reference Image相似。
 
 ## 3. Feedback
 我認為在這種直方圖轉換的影像處理，如果有幾個正確的結果圖片可以參考，會更有助於我們了解程式的正確性。儘管如此，我在試錯的過程中，也學到了許多特別的東西，例如我為了將結果正確性做視覺化，印出了直方圖與CDF，結果發現因為我原本將結果圖片存為JPEG，導致圖片在壓縮後的直方圖與CDF有所變化，導致我以為程式有誤，後來換成PNG無損壓縮後，才發現我原本的程式是正確的。

@@ -63,24 +63,29 @@ def frequency_filtering(input_image):
 def main():
     parser = argparse.ArgumentParser(description='HW3 Laplacian Filtering')
     parser.add_argument('-i', '--input', type=str, help='Input image file')
-    parser.add_argument('-a', '--all', action='store_true', help='Run spatial filtering & frequency filtering')
-    parser.add_argument('-s', '--spatial', action='store_true', help='Run spatial filtering')
-    parser.add_argument('-f', '--frequency', action='store_true', help='Run frequency filtering')
     args = parser.parse_args()
 
     # create result directory if not exist
     if not os.path.exists('results'):
         os.makedirs('results')
 
-    if args.all or args.spatial:
-        spatial_filtered_image0 = spatial_filtering(args.input, 0) # type 0, kernel size = 3
-        cv.imwrite('results/spatial_filtered_0.png', spatial_filtered_image0)
-        spatial_filtered_image1 = spatial_filtering(args.input, 1) # type 1, kernel size = 3
-        cv.imwrite('results/spatial_filtered_1.png', spatial_filtered_image1)
-    
-    if args.all or args.frequency:
-        frequency_filtered_image = frequency_filtering(args.input)
-        cv.imwrite('results/frequency_filtered.png', frequency_filtered_image)
+    # spatial domain filtering
+    spatial_filtered_image0 = spatial_filtering(args.input, 0) # type 0, kernel size = 3
+    cv.imwrite('results/spatial_filtered_0.png', spatial_filtered_image0)
+    spatial_filtered_image1 = spatial_filtering(args.input, 1) # type 1, kernel size = 3
+    cv.imwrite('results/spatial_filtered_1.png', spatial_filtered_image1)
+
+    # frequency domain filtering
+    frequency_filtered_image = frequency_filtering(args.input)
+    cv.imwrite('results/frequency_filtered.png', frequency_filtered_image)
+
+    # show images
+    cv.imshow('Original Image', cv.imread(args.input, cv.IMREAD_GRAYSCALE))
+    cv.imshow('Spatial Filtering 0', spatial_filtered_image0)
+    cv.imshow('Spatial Filtering 1', spatial_filtered_image1)
+    cv.imshow('Frequency Filtering', frequency_filtered_image)
+    cv.waitKey(0)
+    cv.destroyAllWindows()
 
 if __name__ == "__main__":
     main()

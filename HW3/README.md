@@ -4,18 +4,10 @@
 > [!NOTE]
 > Specify the input image path by `-i` option
 
-Run all methods:
-```python
-python3 hw3.py -a -i <input_image_path>
-```
-Then the output images will be saved into `results/spatial_filtered.png` and `results/frequency_filtered.png`
+> [!NOTE]
+> The output image will be saved into `results` folder, which will be created if not exist.
 
-Or run spatial filtering:
+Run as following:
 ```python
-python3 hw2.py -s -i <input_image_path>
-```
-
-Or run frequency filtering:
-```python
-python3 hw2.py -f -i <input_image_path>
+python3 hw3.py -i <input_image_path>
 ```

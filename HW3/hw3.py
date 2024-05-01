@@ -79,13 +79,5 @@ def main():
     frequency_filtered_image = frequency_filtering(args.input)
     cv.imwrite('results/frequency_filtered.png', frequency_filtered_image)
 
-    # show images
-    cv.imshow('Original Image', cv.imread(args.input, cv.IMREAD_GRAYSCALE))
-    cv.imshow('Spatial Filtering 0', spatial_filtered_image0)
-    cv.imshow('Spatial Filtering 1', spatial_filtered_image1)
-    cv.imshow('Frequency Filtering', frequency_filtered_image)
-    cv.waitKey(0)
-    cv.destroyAllWindows()
-
 if __name__ == "__main__":
     main()

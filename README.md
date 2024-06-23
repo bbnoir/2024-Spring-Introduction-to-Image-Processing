@@ -1,1 +1,1 @@
-# image_processing
+# 2024 Spring Introduction to Image Processing
